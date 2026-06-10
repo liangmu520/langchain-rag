@@ -5,9 +5,13 @@ from langchain_core.output_parsers import StrOutputParser
 from langchain_core.language_models import LLM
 from utils import logger
 import httpx
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 LOCAL_LLM_URL = "http://localhost:9090/v1/messages"
-LOCAL_LLM_KEY = "sk-1072f90d-043e-4273-8d3d-6986dc65"
+LOCAL_LLM_KEY = os.getenv("LOCAL_LLM_KEY", "")
 LOCAL_LLM_MODEL = "deepseek-r1:14b"
 
 class LocalLLM(LLM):
@@ -144,4 +148,5 @@ class RAGEngine:
 rag_engine = None
 
 __all__ = ["RAGEngine", "rag_engine"]
+
 
