@@ -3,33 +3,23 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import FAISS
 from langchain.embeddings.base import Embeddings
 from utils import logger
-import numpy as np
 import os
 import httpx
-import asyncio
-import aiohttp
-from sentence_transformers import SentenceTransformer
 
-class BgeEmbeddings(Embeddings):
-    def __init__(self, model_path: str = r"models\BAAI\bge-small-zh-v1.5"):
-        self.model = SentenceTransformer(model_path)
-    
+OLLAMA_EMBED_URL = "http://localhost:11434/api/embeddings"
+OLLAMA_EMBED_MODEL = "nomic-embed-text:latest"
+
+class NomicEmbeddings(Embeddings):
     def embed_documents(self, texts: List[str]) -> List[List[float]]:
-        embeddings = []
-        for text in texts:
-            embedding = self._get_embedding(text)
-            embeddings.append(embedding)
-        return embeddings
-    
+        return [self._get_embedding(t) for t in texts]
+
     def embed_query(self, text: str) -> List[float]:
         return self._get_embedding(text)
-    
+
     def _get_embedding(self, text: str) -> List[float]:
-        embedding = self.model.encode(text)
-        return embedding
-        # except Exception as e:
-        #     logger.error(f"获取嵌入向量时出错: {str(e)}")
-        #     raise
+        resp = httpx.post(OLLAMA_EMBED_URL, json={"model": OLLAMA_EMBED_MODEL, "prompt": text}, timeout=60.0)
+        resp.raise_for_status()
+        return resp.json()["embedding"]
 
 class TextProcessor:
     def __init__(self, chunk_size: int = 500, chunk_overlap: int = 50):
@@ -38,7 +28,7 @@ class TextProcessor:
             chunk_overlap=chunk_overlap,
             separators=["\n\n", "\n", "。", "！", "？", "；", "，", " ", ""]
         )
-        self.embeddings = BgeEmbeddings()
+        self.embeddings = NomicEmbeddings()
         self.vector_store: Optional[FAISS] = None
         logger.info(f"文本处理器初始化完成，chunk_size: {chunk_size}, chunk_overlap: {chunk_overlap}")
     

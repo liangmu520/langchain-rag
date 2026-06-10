@@ -2,7 +2,7 @@ from main import create_rag_system
 import time
 
 agent = create_rag_system()
-agent.process_document(r"D:\cyy\RAG_System\data\txt_test_sample.txt")
+agent.process_document(r"d:\Desktop\RAG_System\data\md_test_sample.md")
 session_id = f"session_{int(time.time())}"
 config = {"configurable": {"thread_id": session_id}}
 
@@ -36,3 +36,4 @@ while True:
     
 
             
+

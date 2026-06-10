@@ -37,32 +37,9 @@ def main():
     return agent
 
 if __name__ == "__main__":
-    agent = main()
-    
-    # if len(sys.argv) >= 2:
-    #     # 处理所有文件参数
-    #     file_paths = sys.argv[1:-1] if len(sys.argv)>2 else sys.argv[1:]
-        
-    #     # 处理文档
-    #     for file_path in file_paths:
-    #         if os.path.exists(file_path):
-    #             agent.process_document(file_path)
-    #             logger.success(f"成功处理文件: {file_path}")
-    #         else:
-    #             logger.error(f"文件不存在: {file_path}")
-    #             sys.exit(1)
-        
-    #     # 执行问答
-    #     if len(sys.argv) >=2:
-    #         query = sys.argv[-1] if len(sys.argv)>1 else ""
-    #         if query:
-    #             result = agent.run(query)
-    #             print("\n=== 问答结果 ===")
-    #             print(result["answer"])
-    #             # print("\n=== 参考来源 ===")
-    #             # for doc in result["documents"]:
-    #             #     print(f"- {doc.metadata['source']} 第{doc.metadata['page']}页")
-    
-    # sys.exit(0)
+    import uvicorn
+    setup_environment()
+    logger.info("=== RAG Web服务启动 === http://localhost:8000")
+    uvicorn.run("app:app", host="0.0.0.0", port=8000, reload=False)
 
 __all__ = ["setup_environment", "create_rag_system", "main"]

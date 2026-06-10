@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>RAG · 知识引擎</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Fira+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#080810;--bg2:#0d0d1a;--bg3:#13131f;
+  --glass:rgba(255,255,255,0.04);--glass-border:rgba(255,255,255,0.08);
+  --accent:#6c63ff;--accent2:#a78bfa;--gold:#f0c040;
+  --text:#e8e8f0;--muted:#6b6b8a;--danger:#ff4d6d;--success:#34d399;
+  --glow:0 0 24px rgba(108,99,255,0.35);
+  --mono:'Fira Code',monospace;--sans:'Fira Sans',sans-serif;
+}
+html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--sans);font-size:15px;line-height:1.6;overflow:hidden}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");pointer-events:none;z-index:9999;opacity:.4}
+.blob{position:fixed;border-radius:50%;filter:blur(80px);pointer-events:none;z-index:0}
+.blob1{width:500px;height:500px;background:rgba(108,99,255,0.08);top:-120px;left:-100px}
+.blob2{width:400px;height:400px;background:rgba(167,139,250,0.06);bottom:-80px;right:-80px}
+.layout{display:flex;height:100vh;position:relative;z-index:1}
+
+/* Sidebar */
+.sidebar{width:260px;min-width:260px;background:linear-gradient(180deg,var(--bg2) 0%,var(--bg) 100%);border-right:1px solid var(--glass-border);display:flex;flex-direction:column;overflow:hidden}
+.sidebar-logo{padding:24px 20px 16px;border-bottom:1px solid var(--glass-border)}
+.logo-mark{display:flex;align-items:center;gap:10px;font-family:var(--mono);font-size:13px;font-weight:600;color:var(--accent2);letter-spacing:.08em}
+.logo-sub{font-size:11px;color:var(--muted);margin-top:3px;font-family:var(--mono);letter-spacing:.1em}
+
+/* New chat button */
+.new-chat-btn{display:flex;align-items:center;gap:8px;margin:12px;padding:10px 14px;border-radius:9px;background:linear-gradient(135deg,rgba(108,99,255,0.2),rgba(167,139,250,0.1));border:1px solid rgba(108,99,255,0.3);color:var(--accent2);font-size:13px;cursor:pointer;transition:all 180ms;font-family:var(--sans)}
+.new-chat-btn:hover{background:linear-gradient(135deg,rgba(108,99,255,0.3),rgba(167,139,250,0.2));box-shadow:var(--glow)}
+
+.sidebar-section{padding:10px 20px 6px;font-size:10px;color:var(--muted);letter-spacing:.18em;text-transform:uppercase;font-family:var(--mono)}
+
+/* Session list */
+.session-list{flex:1;overflow-y:auto;padding:0 8px;display:flex;flex-direction:column;gap:2px}
+.session-list::-webkit-scrollbar{width:3px}
+.session-list::-webkit-scrollbar-thumb{background:var(--glass-border);border-radius:2px}
+.session-item{display:flex;align-items:center;gap:8px;padding:9px 12px;border-radius:8px;cursor:pointer;border:1px solid transparent;transition:all 180ms;group:true}
+.session-item:hover{background:var(--glass);border-color:var(--glass-border)}
+.session-item.active{background:rgba(108,99,255,0.1);border-color:rgba(108,99,255,0.2)}
+.session-title{flex:1;font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--muted)}
+.session-item.active .session-title{color:var(--accent2)}
+.session-item:hover .session-title{color:var(--text)}
+.session-del{opacity:0;padding:2px 5px;border-radius:4px;background:transparent;border:none;cursor:pointer;color:var(--muted);transition:all 150ms;font-size:13px}
+.session-item:hover .session-del{opacity:1}
+.session-del:hover{color:var(--danger);background:rgba(255,77,109,0.1)}
+
+/* Divider */
+.sidebar-divider{height:1px;background:var(--glass-border);margin:8px 12px}
+
+.sidebar-section2{padding:8px 20px 4px;font-size:10px;color:var(--muted);letter-spacing:.18em;text-transform:uppercase;font-family:var(--mono)}
+
+/* Upload */
+.upload-zone{margin:4px 12px 8px;border:1px dashed var(--glass-border);border-radius:10px;padding:14px;text-align:center;cursor:pointer;transition:all 200ms;background:var(--glass)}
+.upload-zone:hover,.upload-zone.drag{border-color:var(--accent);background:rgba(108,99,255,0.07)}
+.upload-zone input{display:none}
+.upload-label{font-size:11.5px;color:var(--muted);margin-top:5px;line-height:1.5}
+.upload-label span{color:var(--accent2);cursor:pointer}
+.upload-progress{margin-top:6px;height:2px;background:var(--glass-border);border-radius:2px;overflow:hidden;display:none}
+.upload-progress.active{display:block}
+.progress-bar{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));width:0%;transition:width .3s;border-radius:2px}
+
+.file-list{padding:0 8px 8px;display:flex;flex-direction:column;gap:4px;max-height:120px;overflow-y:auto}
+.file-list::-webkit-scrollbar{width:3px}
+.file-list::-webkit-scrollbar-thumb{background:var(--glass-border);border-radius:2px}
+.file-chip{display:flex;align-items:center;gap:7px;padding:7px 10px;border-radius:6px;background:var(--glass);border:1px solid var(--glass-border);font-size:11.5px;color:var(--text);animation:slideIn .2s ease}
+.file-chip svg{flex-shrink:0;color:var(--gold)}
+.chip-name{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.chip-badge{font-size:10px;padding:1px 5px;border-radius:4px;background:rgba(52,211,153,0.12);color:var(--success);font-family:var(--mono);white-space:nowrap}
+
+.sidebar-footer{padding:12px 20px;border-top:1px solid var(--glass-border)}
+.status-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--success);margin-right:6px;box-shadow:0 0 6px var(--success)}
+.status-text{font-size:11px;color:var(--muted);font-family:var(--mono)}
+
+/* Main */
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:14px 28px;border-bottom:1px solid var(--glass-border);background:rgba(13,13,26,0.8);backdrop-filter:blur(12px)}
+.topbar-title{font-size:13px;color:var(--muted);font-family:var(--mono);letter-spacing:.1em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:60%}
+.btn-ghost{display:flex;align-items:center;gap:6px;padding:7px 14px;border-radius:7px;border:1px solid var(--glass-border);background:transparent;color:var(--muted);font-size:12px;cursor:pointer;transition:all 180ms;font-family:var(--sans)}
+.btn-ghost:hover{color:var(--text);border-color:var(--accent);background:rgba(108,99,255,0.08)}
+
+.chat-area{flex:1;overflow-y:auto;padding:28px;display:flex;flex-direction:column;gap:20px;scroll-behavior:smooth}
+.chat-area::-webkit-scrollbar{width:4px}
+.chat-area::-webkit-scrollbar-thumb{background:var(--glass-border);border-radius:2px}
+
+.empty-state{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;opacity:.45;padding-bottom:80px}
+.empty-state h2{font-size:22px;font-weight:300;letter-spacing:.06em}
+.empty-state p{font-size:13px;color:var(--muted);font-family:var(--mono)}
+
+.msg{display:flex;gap:14px;animation:fadeUp .25s ease}
+.msg.user{flex-direction:row-reverse}
+.avatar{width:34px;height:34px;border-radius:8px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;font-family:var(--mono)}
+.avatar.ai{background:linear-gradient(135deg,rgba(108,99,255,0.3),rgba(167,139,250,0.2));border:1px solid rgba(108,99,255,0.3);color:var(--accent2)}
+.avatar.user{background:linear-gradient(135deg,rgba(240,192,64,0.2),rgba(240,192,64,0.1));border:1px solid rgba(240,192,64,0.25);color:var(--gold)}
+.bubble{max-width:68%;padding:14px 18px;border-radius:12px;font-size:14px;line-height:1.75}
+.bubble.ai{background:var(--glass);border:1px solid var(--glass-border);border-top-left-radius:4px}
+.bubble.user{background:linear-gradient(135deg,rgba(108,99,255,0.18),rgba(167,139,250,0.12));border:1px solid rgba(108,99,255,0.2);border-top-right-radius:4px}
+.bubble-meta{font-size:11px;color:var(--muted);margin-top:8px;font-family:var(--mono)}
+
+.sources{margin-top:10px}
+.sources-toggle{display:flex;align-items:center;gap:6px;font-size:11.5px;color:var(--muted);cursor:pointer;font-family:var(--mono);transition:color 150ms;background:none;border:none;padding:4px 0}
+.sources-toggle:hover{color:var(--accent2)}
+.sources-list{margin-top:8px;display:none;flex-direction:column;gap:6px}
+.sources-list.open{display:flex}
+.source-card{padding:10px 12px;border-radius:7px;background:rgba(108,99,255,0.06);border:1px solid rgba(108,99,255,0.15);font-size:12px}
+.source-card .src-file{color:var(--accent2);font-family:var(--mono);font-size:11px;margin-bottom:4px}
+.source-card .src-score{float:right;font-size:10px;color:var(--muted);font-family:var(--mono);background:rgba(255,255,255,0.05);padding:1px 6px;border-radius:4px}
+.source-card .src-text{color:var(--muted);line-height:1.55}
+
+.thinking{display:flex;gap:4px;align-items:center;padding:14px 18px;background:var(--glass);border:1px solid var(--glass-border);border-radius:12px;border-top-left-radius:4px;width:fit-content}
+.thinking span{width:5px;height:5px;border-radius:50%;background:var(--accent2);animation:pulse 1.2s infinite}
+.thinking span:nth-child(2){animation-delay:.2s}
+.thinking span:nth-child(3){animation-delay:.4s}
+
+.input-bar{padding:14px 28px 18px;border-top:1px solid var(--glass-border);background:rgba(8,8,16,0.9);backdrop-filter:blur(16px)}
+.input-wrap{display:flex;align-items:flex-end;gap:10px;background:var(--bg3);border:1px solid var(--glass-border);border-radius:12px;padding:10px 14px;transition:border-color 200ms}
+.input-wrap:focus-within{border-color:var(--accent)}
+.input-wrap textarea{flex:1;background:transparent;border:none;outline:none;color:var(--text);font-size:14px;font-family:var(--sans);resize:none;max-height:140px;line-height:1.6}
+.input-wrap textarea::placeholder{color:var(--muted)}
+.send-btn{width:36px;height:36px;border-radius:8px;flex-shrink:0;background:linear-gradient(135deg,var(--accent),var(--accent2));border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 180ms;box-shadow:var(--glow)}
+.send-btn:hover{transform:scale(1.05)}
+.send-btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
+.send-btn.stop{background:linear-gradient(135deg,#ff4d6d,#ff6b6b)}
+.input-hint{font-size:11px;color:var(--muted);margin-top:6px;text-align:center;font-family:var(--mono)}
+
+.toast-container{position:fixed;bottom:24px;right:24px;z-index:9998;display:flex;flex-direction:column;gap:8px}
+.toast{padding:11px 16px;border-radius:9px;font-size:13px;background:var(--bg3);border:1px solid var(--glass-border);color:var(--text);animation:slideIn .2s ease;backdrop-filter:blur(12px);min-width:200px}
+.toast.success{border-color:rgba(52,211,153,0.3);background:rgba(52,211,153,0.08)}
+.toast.error{border-color:rgba(255,77,109,0.3);background:rgba(255,77,109,0.08)}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes slideIn{from{opacity:0;transform:translateX(12px)}to{opacity:1;transform:translateX(0)}}
+@keyframes pulse{0%,80%,100%{transform:scale(.8);opacity:.5}40%{transform:scale(1.1);opacity:1}}
+@media(max-width:700px){.sidebar{display:none}.chat-area{padding:16px}.input-bar{padding:10px 14px 14px}.bubble{max-width:90%}}
+</style>
+</head>
+<body>
+<div class="blob blob1"></div>
+<div class="blob blob2"></div>
+<div class="layout">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-mark">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        RAG ENGINE
+      </div>
+      <div class="logo-sub">知识检索 · 生成问答</div>
+    </div>
+
+    <button class="new-chat-btn" onclick="newSession()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      新对话
+    </button>
+
+    <div class="sidebar-section">历史对话</div>
+    <div class="session-list" id="sessionList"></div>
+
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section2">知识库</div>
+
+    <div class="upload-zone" id="uploadZone">
+      <input type="file" id="fileInput" accept=".pdf,.docx,.md,.txt" multiple/>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent2)" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+      <div class="upload-label">拖拽或 <span onclick="document.getElementById('fileInput').click()">点击上传</span><br/>PDF · DOCX · MD · TXT</div>
+      <div class="upload-progress" id="uploadProgress"><div class="progress-bar" id="progressBar"></div></div>
+    </div>
+    <div class="file-list" id="fileList"></div>
+
+    <div class="sidebar-footer">
+      <span class="status-dot" id="statusDot"></span>
+      <span class="status-text" id="statusText">连接中...</span>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <main class="main">
+    <div class="topbar">
+      <span class="topbar-title" id="topbarTitle">// RAG · CINEMATIC KNOWLEDGE ENGINE</span>
+      <button class="btn-ghost" onclick="clearCurrentSession()">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/></svg>
+        清除记录
+      </button>
+    </div>
+
+    <div class="chat-area" id="chatArea">
+      <div class="empty-state" id="emptyState">
+        <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="var(--accent2)" stroke-width="1" opacity=".6"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+        <h2>开始检索知识</h2>
+        <p>上传文档，然后向 AI 提问</p>
+      </div>
+    </div>
+
+    <div class="input-bar">
+      <div class="input-wrap">
+        <textarea id="queryInput" rows="1" placeholder="向知识库提问..." onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
+        <button class="send-btn" id="sendBtn" onclick="sendQuery()">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        </button>
+      </div>
+      <div class="input-hint">Enter 发送 · Shift+Enter 换行</div>
+    </div>
+  </main>
+</div>
+<div class="toast-container" id="toastContainer"></div>
+
+<script>
+const API = '';
+let currentSessionId = null;
+let thinkingEl = null;
+
+// ── Utils ──────────────────────────────────────────────────────────────────
+function escHtml(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') }
+function formatAnswer(t){ return escHtml(t).replace(/\n/g,'<br/>') }
+function autoResize(el){ el.style.height='auto'; el.style.height=Math.min(el.scrollHeight,140)+'px' }
+function handleKey(e){ if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendQuery()} }
+function scrollBottom(){ const a=document.getElementById('chatArea'); a.scrollTop=a.scrollHeight }
+
+function toast(msg,type='info'){
+  const c=document.getElementById('toastContainer');
+  const t=document.createElement('div'); t.className=`toast ${type}`; t.textContent=msg;
+  c.appendChild(t); setTimeout(()=>t.remove(),3200);
+}
+
+// ── Sessions ───────────────────────────────────────────────────────────────
+async function loadSessions(){
+  const r=await fetch(API+'/api/sessions');
+  const data=await r.json();
+  renderSessionList(data.sessions);
+  return data.sessions;
+}
+
+function renderSessionList(sessions){
+  const el=document.getElementById('sessionList');
+  el.innerHTML='';
+  sessions.forEach(s=>{
+    const div=document.createElement('div');
+    div.className='session-item'+(s.id===currentSessionId?' active':'');
+    div.dataset.id=s.id;
+    div.innerHTML=`<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      <span class="session-title">${escHtml(s.title)}</span>
+      <button class="session-del" title="删除" onclick="deleteSession(event,'${s.id}')">✕</button>`;
+    div.addEventListener('click',()=>switchSession(s.id,s.title));
+    el.appendChild(div);
+  });
+}
+
+async function newSession(){
+  const r=await fetch(API+'/api/sessions',{method:'POST'});
+  const s=await r.json();
+  currentSessionId=s.id;
+  clearChatArea();
+  await loadSessions();
+  document.getElementById('topbarTitle').textContent='新对话';
+}
+
+async function switchSession(sid,title){
+  if(sid===currentSessionId) return;
+  currentSessionId=sid;
+  document.getElementById('topbarTitle').textContent=title;
+  // load messages
+  const r=await fetch(API+'/api/sessions/'+sid);
+  const d=await r.json();
+  clearChatArea();
+  const history=d.history||[];
+  if(history.length>0){
+    document.getElementById('emptyState')?.remove();
+    history.forEach((m,i)=>{
+      if(m.role==='user') appendMsgRaw('user',m.content);
+      else if(m.role==='assistant') appendMsgRaw('ai',m.content);
+    });
+    scrollBottom();
+  }
+  // update active state
+  document.querySelectorAll('.session-item').forEach(el=>{
+    el.classList.toggle('active',el.dataset.id===sid);
+  });
+}
+
+async function deleteSession(e,sid){
+  e.stopPropagation();
+  await fetch(API+'/api/sessions/'+sid,{method:'DELETE'});
+  if(currentSessionId===sid){ currentSessionId=null; clearChatArea(); document.getElementById('topbarTitle').textContent='// RAG · CINEMATIC KNOWLEDGE ENGINE'; }
+  loadSessions();
+}
+
+async function clearCurrentSession(){
+  if(!currentSessionId){ toast('请先选择或新建对话','error'); return; }
+  await fetch(API+'/api/sessions/'+currentSessionId,{method:'DELETE'});
+  const r=await fetch(API+'/api/sessions',{method:'POST'});
+  const s=await r.json();
+  currentSessionId=s.id;
+  clearChatArea();
+  loadSessions();
+}
+
+// ── Chat rendering ─────────────────────────────────────────────────────────
+function clearChatArea(){
+  document.getElementById('chatArea').innerHTML=`<div class="empty-state" id="emptyState">
+    <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="var(--accent2)" stroke-width="1" opacity=".6"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+    <h2>开始检索知识</h2><p>上传文档，然后向 AI 提问</p></div>`;
+}
+
+function appendMsgRaw(role,text){
+  const area=document.getElementById('chatArea');
+  document.getElementById('emptyState')?.remove();
+  const div=document.createElement('div');
+  if(role==='user'){
+    div.className='msg user';
+    div.innerHTML=`<div class="avatar user">ME</div><div class="bubble user">${escHtml(text)}</div>`;
+  } else {
+    div.className='msg';
+    div.innerHTML=`<div class="avatar ai">AI</div><div class="bubble ai"><div>${formatAnswer(text)}</div></div>`;
+  }
+  area.appendChild(div);
+}
+
+function showThinking(){
+  const area=document.getElementById('chatArea');
+  document.getElementById('emptyState')?.remove();
+  const div=document.createElement('div'); div.className='msg';
+  div.innerHTML=`<div class="avatar ai">AI</div><div class="thinking"><span></span><span></span><span></span></div>`;
+  thinkingEl=div; area.appendChild(div); scrollBottom();
+}
+function removeThinking(){ if(thinkingEl){thinkingEl.remove();thinkingEl=null;} }
+
+function appendAIMsg(answer,sources){
+  removeThinking();
+  const area=document.getElementById('chatArea');
+  const div=document.createElement('div'); div.className='msg';
+  let srcHtml='';
+  if(sources&&sources.length){
+    const items=sources.map(s=>`<div class="source-card"><span class="src-score">${s.score}</span><div class="src-file">${escHtml(s.file_name)}</div><div class="src-text">${escHtml(s.text)}${s.text.length>=300?'…':''}</div></div>`).join('');
+    srcHtml=`<div class="sources"><button class="sources-toggle" onclick="toggleSrc(this)"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>${sources.length} 条参考来源</button><div class="sources-list">${items}</div></div>`;
+  }
+  div.innerHTML=`<div class="avatar ai">AI</div><div class="bubble ai"><div>${formatAnswer(answer)}</div>${srcHtml}<div class="bubble-meta">${new Date().toLocaleTimeString('zh-CN',{hour:'2-digit',minute:'2-digit'})}</div></div>`;
+  area.appendChild(div); scrollBottom();
+}
+
+function toggleSrc(btn){
+  const list=btn.nextElementSibling;
+  list.classList.toggle('open');
+  btn.querySelector('svg').style.transform=list.classList.contains('open')?'rotate(90deg)':'';
+}
+
+// ── Query with abort ───────────────────────────────────────────────────────
+let currentAbortCtrl = null;
+let currentQueryId   = null;
+
+function setSendMode(sending){
+  const btn=document.getElementById('sendBtn');
+  if(sending){
+    btn.classList.add('stop');
+    btn.title='点击中断';
+    btn.innerHTML=`<svg width="13" height="13" viewBox="0 0 24 24" fill="white"><rect x="4" y="4" width="16" height="16" rx="2"/></svg>`;
+    btn.onclick=abortQuery;
+  } else {
+    btn.classList.remove('stop');
+    btn.title='发送';
+    btn.innerHTML=`<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>`;
+    btn.onclick=sendQuery;
+    btn.disabled=false;
+  }
+}
+
+async function abortQuery(){
+  if(currentQueryId){
+    try{ await fetch(API+'/api/abort/'+currentQueryId,{method:'POST'}); } catch{}
+  }
+  if(currentAbortCtrl){ currentAbortCtrl.abort(); }
+  removeThinking();
+  setSendMode(false);
+  toast('已中断','info');
+}
+
+async function sendQuery(){
+  const input=document.getElementById('queryInput');
+  const query=input.value.trim();
+  if(!query) return;
+  if(!currentSessionId){ await newSession(); }
+  input.value=''; input.style.height='auto';
+
+  const qid = crypto.randomUUID ? crypto.randomUUID().replace(/-/g,'') : Math.random().toString(36).slice(2);
+  currentQueryId=qid;
+  currentAbortCtrl=new AbortController();
+  setSendMode(true);
+  appendMsgRaw('user',query);
+  showThinking();
+  try{
+    const r=await fetch(API+'/api/query',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({query,session_id:currentSessionId,query_id:qid}),
+      signal:currentAbortCtrl.signal
+    });
+    if(!r.ok) throw new Error((await r.json()).detail||r.statusText);
+    const data=await r.json();
+    if(data.aborted){ removeThinking(); return; }
+    appendAIMsg(data.answer,data.sources);
+    if(data.title){
+      const el=document.querySelector(`.session-item[data-id="${currentSessionId}"] .session-title`);
+      if(el) el.textContent=data.title;
+      document.getElementById('topbarTitle').textContent=data.title;
+    }
+  } catch(e){
+    removeThinking();
+    if(e.name!=='AbortError') toast('查询失败: '+e.message,'error');
+  } finally{
+    currentQueryId=null; currentAbortCtrl=null;
+    setSendMode(false);
+    document.getElementById('queryInput').focus();
+  }
+}
+
+// ── Upload ─────────────────────────────────────────────────────────────────
+async function uploadFile(file){
+  const prog=document.getElementById('uploadProgress'),bar=document.getElementById('progressBar');
+  document.getElementById('statusText').textContent=`上传: ${file.name}`;
+  prog.classList.add('active'); bar.style.width='40%';
+  const fd=new FormData(); fd.append('file',file);
+  try{
+    bar.style.width='70%';
+    const r=await fetch(API+'/api/upload',{method:'POST',body:fd});
+    bar.style.width='100%';
+    if(!r.ok) throw new Error((await r.json()).detail||r.statusText);
+    const data=await r.json();
+    if(!document.querySelector(`[title="${file.name}"]`)) addFileChip(file.name,data.chunks+'块');
+    toast(`${file.name} 已入库 ${data.chunks} 块`,'success');
+    document.getElementById('statusText').textContent='系统就绪';
+  } catch(e){
+    toast('上传失败: '+e.message,'error');
+    document.getElementById('statusText').textContent='上传出错';
+  } finally{
+    setTimeout(()=>{prog.classList.remove('active');bar.style.width='0%'},600);
+  }
+}
+
+function addFileChip(name,badge){
+  const list=document.getElementById('fileList');
+  const div=document.createElement('div'); div.className='file-chip';
+  div.innerHTML=`<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg><span class="chip-name" title="${escHtml(name)}">${escHtml(name)}</span><span class="chip-badge">${badge}</span>`;
+  list.appendChild(div);
+}
+
+document.getElementById('fileInput').addEventListener('change',e=>{Array.from(e.target.files).forEach(uploadFile);e.target.value='';});
+const zone=document.getElementById('uploadZone');
+zone.addEventListener('dragover',e=>{e.preventDefault();zone.classList.add('drag')});
+zone.addEventListener('dragleave',()=>zone.classList.remove('drag'));
+zone.addEventListener('drop',e=>{e.preventDefault();zone.classList.remove('drag');Array.from(e.dataTransfer.files).forEach(uploadFile);});
+zone.addEventListener('click',e=>{if(e.target.tagName!=='SPAN')document.getElementById('fileInput').click();});
+
+// ── Init ───────────────────────────────────────────────────────────────────
+(async()=>{
+  try{
+    const r=await fetch(API+'/api/health');
+    if(!r.ok) throw new Error();
+    document.getElementById('statusText').textContent='系统就绪';
+  } catch{
+    document.getElementById('statusText').textContent='连接失败';
+    document.getElementById('statusDot').style.background='var(--danger)';
+    return;
+  }
+  // restore files
+  try{
+    const r=await fetch(API+'/api/files');
+    const d=await r.json();
+    d.files.forEach(f=>addFileChip(f.name,'已入库'));
+  } catch{}
+  // load sessions, auto-select latest
+  const sessions=await loadSessions();
+  if(sessions.length>0){
+    await switchSession(sessions[0].id,sessions[0].title);
+  } else {
+    const r=await fetch(API+'/api/sessions',{method:'POST'});
+    const s=await r.json();
+    currentSessionId=s.id;
+    await loadSessions();
+  }
+})();
+</script>
+</body>
+</html>
+
