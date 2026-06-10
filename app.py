@@ -165,7 +165,8 @@ def query(req: QueryRequest):
     except HTTPException:
         raise
     except Exception as e:
-        logger.error(f"Query error: {e}")
+        cause = getattr(e, "__cause__", None) or getattr(e, "__context__", None)
+        logger.error(f"Query error: {cause or e}")
         raise HTTPException(500, str(e))
     finally:
         _abort_events.pop(qid, None)

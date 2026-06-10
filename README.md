@@ -1,95 +1,105 @@
-# RAG系统项目
+# RAG System
 
 ## 项目介绍
 
-本项目基于LangChain和LangGraph构建的RAG系统项目。该系统支持多种文档格式的上传与解析、文本分段与向量化、向量检索与智能回答，以及多轮对话功能。系统还集成了LangSmith可观测性，便于监控和调试。
+基于 LangChain / LangGraph 构建的生产级 RAG（检索增强生成）系统，提供文档上传解析、混合检索、神经网络精排、查询改写、多轮对话及 REST API 服务。
 
 ## 核心功能
 
-### 1. 文档上传与解析
-- 支持PDF、Word (.docx)、Markdown (.md)、TXT文件上传
-- 自动提取文本内容，保留文档结构信息
-
-### 2. 文本分段与向量化
-- 智能分段算法，支持自定义分段大小和重叠度
-- 使用BGE Embeddings模型进行向量化
-- 基于FAISS构建高效向量检索索引
-
-### 3. 向量检索与回答生成
-- 基于语义相似度的高效检索
-- 集成LLM（Qwen3）生成准确回答
-- 回答中自动引用原文段落来源
-
-### 4. 多轮对话能力
-- 保留完整对话上下文
-- 支持连续提问和补充提问
-- 基于历史对话生成连贯回答
-
-### 5. Agent调用可观测性
-- 集成LangSmith平台，记录完整执行轨迹
-- 自动上报输入、输出、响应时间、相似度分数等信息
-- 提供可视化执行流程
+| 模块 | 说明 |
+|------|------|
+| 文档解析 | 支持 PDF、Word (.docx)、Markdown、TXT |
+| 文本分段 | `RecursiveCharacterTextSplitter` 智能分段，可配置 chunk size / overlap |
+| 向量化 | 本地 BGE Embeddings（Ollama）+ FAISS 索引 |
+| 混合检索 | FAISS 向量检索 + BM25 关键词检索，RRF 融合排序 |
+| 查询改写 | HyDE（假设文档嵌入）+ Multi-Query 多角度扩展 |
+| 精排 | `BAAI/bge-reranker-base` Cross-Encoder（transformers 原生推理） |
+| 回答生成 | Qwen3（兼容 OpenAI `/v1/messages` 接口） |
+| Agent 流程 | LangGraph `StateGraph`：retrieve → rerank → generate → log |
+| 多轮对话 | `MemorySaver` 保存会话上下文 |
+| 可观测性 | LangSmith 全链路追踪 + loguru 结构化日志 |
+| REST API | FastAPI，支持文件上传、查询、会话管理 |
 
 ## 技术栈
 
-- **Python 3.11+**：核心编程语言
-- **LangChain**：构建RAG系统的核心框架
-- **LangGraph**：构建Agent执行流程图
-- **LangSmith**：提供可观测性和追踪功能
-- **BGE Embeddings**：用于文本嵌入
-- **Qwen API**：用于生成回答
-- **FAISS**：高效向量数据库
-- **pypdf/python-docx/mistune**：文档解析库
-- **loguru**：结构化日志管理
-- **uv**：依赖管理工具
+- **Python 3.11+**
+- **LangChain** — RAG 核心框架（文本分段、向量存储、LLM 抽象）
+- **LangGraph** — Agent 执行流程图（StateGraph + MemorySaver）
+- **LangSmith** — 可观测性与追踪
+- **FAISS** — 高效向量索引
+- **BM25 (rank-bm25)** — 关键词检索
+- **BGE Embeddings** — 本地文本嵌入（via Ollama）
+- **BAAI/bge-reranker-base** — Cross-Encoder 精排（transformers）
+- **Qwen3** — 大语言模型（OpenAI 兼容 API）
+- **FastAPI** — REST API 服务
+- **loguru** — 结构化日志
+- **uv** — 依赖管理
 
 ## 项目结构
 
 ```
 RAG_System/
-├── main.py              # 主程序入口
-├── demo.py              # 演示脚本
-├── utils.py             # 工具函数和日志配置
-├── document_processor.py  # 文档处理模块
-├── text_processor.py    # 文本分段和向量化模块
-├── rag_engine.py        # RAG引擎核心模块
-├── agent_flow.py        # LangGraph Agent流程模块
-├── pyproject.toml       # 项目配置和依赖
-└── data/                # 示例文档目录
+├── app.py                  # FastAPI REST API 服务
+├── main.py                 # 命令行入口
+├── demo.py                 # 演示脚本
+├── agent_flow.py           # LangGraph Agent 流程
+├── rag_engine.py           # RAG 引擎（prompt 构造 + LLM 调用）
+├── text_processor.py       # 文本分段与向量化（FAISS）
+├── hybrid_retriever.py     # 混合检索（FAISS + BM25 + RRF）
+├── query_rewriter.py       # 查询改写（HyDE + Multi-Query）
+├── reranker.py             # Cross-Encoder 精排
+├── document_processor.py   # 文档解析（PDF / Word / MD / TXT）
+├── utils.py                # 日志配置、通用工具
+├── pyproject.toml          # 项目配置与依赖
+└── .env                    # 环境变量（API Key 等）
 ```
 
 ## 安装与配置
 
-### 1. 克隆项目
+### 1. 安装依赖
 
 ```bash
-git clone 
-cd RAG_System
-```
-
-### 2. 安装依赖
-
-使用uv安装项目依赖：
-
-```bash
-# 安装uv
 pip install uv
-
-# 安装项目依赖
 uv sync
 ```
 
-### 3. 配置环境变量
+### 2. 配置环境变量
 
-编辑`.env`文件,配置API_KEY
+编辑 `.env`：
 
 ```
 Qwen_API_KEY=your_qwen_api_key
 LangSmith_API_KEY=your_langsmith_api_key
 ```
 
-### 快速开始
+### 3. 启动 Ollama（本地 Embeddings）
 
 ```bash
-python demo.py /   python main.py "path/to/your/document.pdf" "your question"
+ollama pull bge-m3
+ollama serve
+```
+
+## 启动服务
+
+```bash
+# API 服务
+python app.py
+# 或
+start_server.bat
+
+# 命令行演示
+python demo.py
+python main.py "path/to/doc.pdf" "your question"
+```
+
+## RAG 流程
+
+```
+用户提问
+  → Query 改写（HyDE / Multi-Query）
+  → 混合检索（FAISS 向量 + BM25 关键词 → RRF 融合）
+  → Cross-Encoder 精排（bge-reranker-base）
+  → Prompt 构造（上下文 + 对话历史 + 问题）
+  → Qwen3 生成回答（含来源引用）
+  → LangSmith 追踪记录
 ```

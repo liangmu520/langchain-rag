@@ -1,7 +1,4 @@
 from typing import List, Dict, Any, Optional
-from langchain_core.prompts import ChatPromptTemplate
-from langchain_core.runnables import RunnablePassthrough
-from langchain_core.output_parsers import StrOutputParser
 from langchain_core.language_models import LLM
 from utils import logger
 import httpx
@@ -12,7 +9,7 @@ load_dotenv()
 
 LOCAL_LLM_URL = "http://localhost:9090/v1/messages"
 LOCAL_LLM_KEY = os.getenv("LOCAL_LLM_KEY", "")
-LOCAL_LLM_MODEL = "deepseek-r1:14b"
+LOCAL_LLM_MODEL = "auto"
 
 class LocalLLM(LLM):
     """本地 Ollama LLM 实现"""
@@ -67,20 +64,14 @@ class RAGEngine:
             raise
         self.text_processor = text_processor
         self.conversation_history: List[Dict[str, str]] = []
-        self.prompt_template = ChatPromptTemplate.from_template(
-            """
-            你是一个专业的助手，基于提供的参考资料回答用户问题。
-            参考资料：
-            {context}           
-            对话历史：
-            {history} 
-            用户当前问题：
-            {query}
-            请基于参考资料和对话历史，以自然、友好的语言回答用户问题。
-            若回答中包含引用来源，请必须包含引用来源，格式为"（来源：文件名）",
-            若回答中不包含引用来源，请不要在回答中添加任何来源信息。
-            如果参考资料中没有相关信息，请坦诚告知用户。
-            """
+        self.prompt_template = (
+            "你是一个专业的助手，基于提供的参考资料回答用户问题。\n"
+            "参考资料：\n{context}\n\n"
+            "对话历史：\n{history}\n\n"
+            "用户当前问题：\n{query}\n\n"
+            "请基于参考资料和对话历史，以自然、友好的语言回答用户问题。\n"
+            "若回答中包含引用来源，请必须包含引用来源，格式为（来源：文件名）。\n"
+            "如果参考资料中没有相关信息，请坦诚告知用户。"
         )
         logger.info("RAG引擎初始化完成")
 
@@ -111,17 +102,8 @@ class RAGEngine:
         history = self.format_history()
         logger.info(f"开始生成回答，查询: {query[:50]}..., 上下文长度: {len(context)}")
         try:
-            chain = (
-                {
-                    "context": RunnablePassthrough(),
-                    "history": RunnablePassthrough(),
-                    "query": RunnablePassthrough()
-                }
-                | self.prompt_template
-                | self.llm
-                | StrOutputParser()
-            )
-            return chain.invoke({"context": context, "history": history, "query": query})
+            prompt = self.prompt_template.format(context=context, history=history, query=query)
+            return self.llm._call(prompt)
         except Exception as e:
             logger.error(f"生成回答时出错: {str(e)}")
             raise
