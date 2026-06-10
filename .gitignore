@@ -1,8 +1,0 @@
-__pycache__/
-*.pyc
-.env
-vector_db/
-logs/
-data/uploads/
-rag_system.log
-*.log

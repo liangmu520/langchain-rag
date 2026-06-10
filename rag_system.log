@@ -1,0 +1,385 @@
+2026-06-10 09:20:46 | INFO     | document_processor:__init__:13 - 文档处理器初始化完成
+2026-06-10 09:20:51 | INFO     | text_processor:__init__:33 - 文本处理器初始化完成，chunk_size: 500, chunk_overlap: 50
+2026-06-10 09:21:14 | INFO     | rag_engine:__init__:57 - 成功初始化本地LLM
+2026-06-10 09:21:14 | INFO     | rag_engine:__init__:78 - RAG引擎初始化完成
+2026-06-10 09:21:14 | INFO     | agent_flow:__init__:31 - LangSmith未启用，跳过初始化
+2026-06-10 09:21:14 | INFO     | agent_flow:_build_graph:58 - LangGraph执行流程构建完成
+2026-06-10 09:21:14 | INFO     | agent_flow:__init__:46 - RAG Agent初始化完成
+2026-06-10 09:21:14 | INFO     | document_processor:process_file:22 - 开始处理文件: md_test_sample.md, 类型: .md
+2026-06-10 09:21:14 | INFO     | document_processor:process_file:34 - 文件处理完成: md_test_sample.md, 内容长度: 21935
+2026-06-10 09:21:14 | INFO     | text_processor:split_text:36 - 开始分割文本，原文本长度: 21935
+2026-06-10 09:21:14 | INFO     | text_processor:split_text:55 - 文本分割完成，生成 66 个段落
+2026-06-10 09:21:14 | INFO     | text_processor:create_vector_store:59 - 开始创建向量数据库，段落数量: 66
+2026-06-10 09:22:37 | ERROR    | text_processor:create_vector_store:73 - 创建向量数据库时出错: Could not import faiss python package. Please install it with `pip install faiss-gpu` (for CUDA supported GPU) or `pip install faiss-cpu` (depending on Python version).
+2026-06-10 09:46:35 | INFO     | document_processor:__init__:13 - 文档处理器初始化完成
+2026-06-10 09:48:10 | INFO     | document_processor:__init__:13 - 文档处理器初始化完成
+2026-06-10 09:51:34 | INFO     | document_processor:__init__:13 - 文档处理器初始化完成
+2026-06-10 09:51:55 | INFO     | text_processor:__init__:33 - 文本处理器初始化完成，chunk_size: 500, chunk_overlap: 50
+2026-06-10 09:51:56 | WARNING  | __main__:setup_environment:16 - .env文件不存在，请根据.env.example创建
+2026-06-10 09:51:56 | INFO     | utils:ensure_directory:49 - 创建目录: vector_db
+2026-06-10 09:51:56 | INFO     | utils:ensure_directory:49 - 创建目录: logs
+2026-06-10 09:51:56 | INFO     | __main__:<module>:42 - === RAG Web服务启动 === http://localhost:8000
+2026-06-10 09:53:40 | WARNING  | main:setup_environment:16 - .env文件不存在，请根据.env.example创建
+2026-06-10 09:53:41 | INFO     | rag_engine:__init__:57 - 成功初始化本地LLM
+2026-06-10 09:53:41 | INFO     | rag_engine:__init__:78 - RAG引擎初始化完成
+2026-06-10 09:53:41 | INFO     | agent_flow:__init__:31 - LangSmith未启用，跳过初始化
+2026-06-10 09:53:41 | INFO     | agent_flow:_build_graph:58 - LangGraph执行流程构建完成
+2026-06-10 09:53:41 | INFO     | agent_flow:__init__:46 - RAG Agent初始化完成
+2026-06-10 09:53:41 | INFO     | app:get_agent:26 - RAG agent initialized
+2026-06-10 09:53:41 | INFO     | agent_flow:run:138 - Agent开始处理查询: 你好 你是什么模型...
+2026-06-10 09:53:41 | INFO     | agent_flow:_retrieve_documents:63 - [节点: retrieve] 开始检索文档，查询: 你好 你是什么模型...
+2026-06-10 09:53:41 | ERROR    | app:query:52 - Query error: 向量数据库未初始化
+2026-06-10 09:55:27 | INFO     | document_processor:process_file:22 - 开始处理文件: pdf_test_sample.pdf, 类型: .pdf
+2026-06-10 09:55:27 | INFO     | document_processor:process_file:34 - 文件处理完成: pdf_test_sample.pdf, 内容长度: 23576
+2026-06-10 09:55:27 | INFO     | text_processor:split_text:36 - 开始分割文本，原文本长度: 23576
+2026-06-10 09:55:27 | INFO     | text_processor:split_text:55 - 文本分割完成，生成 53 个段落
+2026-06-10 09:55:27 | INFO     | text_processor:create_vector_store:59 - 开始创建向量数据库，段落数量: 53
+2026-06-10 09:55:29 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 09:55:29 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 09:55:30 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 09:55:30 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 09:55:31 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 09:55:31 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 09:55:31 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 09:55:32 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 09:55:32 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 09:55:33 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 09:55:33 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 09:55:34 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 09:55:34 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 09:55:34 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 09:55:35 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 09:55:35 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 09:55:35 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 09:55:36 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 09:55:36 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 09:55:37 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 09:55:37 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 09:55:38 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 09:55:38 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 09:55:39 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 09:55:39 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 09:55:40 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 09:55:40 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 09:55:41 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 09:55:41 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 09:55:41 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 09:55:42 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 09:55:42 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 09:55:43 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 09:55:43 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 09:55:44 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 09:55:44 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 09:55:44 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 09:55:45 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 09:55:45 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 09:55:46 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 09:55:46 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 09:55:47 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 09:55:47 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 09:55:47 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 09:55:48 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 09:55:48 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 09:55:49 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 09:55:49 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 09:55:50 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 09:55:50 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 09:55:51 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 09:55:51 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 09:55:52 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 09:55:52 | INFO     | faiss.loader:<module>:132 - Loading faiss with AVX2 support.
+2026-06-10 09:55:52 | INFO     | faiss.loader:<module>:137 - Could not load library with AVX2 support due to:
+ModuleNotFoundError("No module named 'faiss.swigfaiss_avx2'")
+2026-06-10 09:55:52 | INFO     | faiss.loader:<module>:156 - Loading faiss.
+2026-06-10 09:55:52 | INFO     | faiss.loader:<module>:158 - Successfully loaded faiss.
+2026-06-10 09:55:52 | INFO     | text_processor:create_vector_store:70 - 向量数据库创建成功
+2026-06-10 09:56:06 | INFO     | agent_flow:run:138 - Agent开始处理查询: 你好 你是什么模型...
+2026-06-10 09:56:06 | INFO     | agent_flow:_retrieve_documents:63 - [节点: retrieve] 开始检索文档，查询: 你好 你是什么模型...
+2026-06-10 09:56:06 | INFO     | text_processor:search_similar:79 - 开始向量搜索，查询: 你好 你是什么模型..., k=5
+2026-06-10 09:56:09 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 09:56:09 | INFO     | text_processor:search_similar:92 - 向量搜索完成，找到 5 个相似结果
+2026-06-10 09:56:09 | INFO     | agent_flow:_generate_answer:80 - [节点: generate] 开始生成回答
+2026-06-10 09:56:09 | INFO     | rag_engine:generate_answer:105 - 开始生成回答，查询: 你好 你是什么模型..., 上下文长度: 2262
+2026-06-10 09:56:13 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:9090/v1/messages "HTTP/1.1 200 OK"
+2026-06-10 09:56:13 | ERROR    | rag_engine:_call:49 - 调用本地LLM时出错: list index out of range
+2026-06-10 09:56:13 | ERROR    | rag_engine:generate_answer:119 - 生成回答时出错: list index out of range
+2026-06-10 09:56:13 | ERROR    | app:query:52 - Query error: list index out of range
+2026-06-10 09:57:23 | INFO     | document_processor:__init__:13 - 文档处理器初始化完成
+2026-06-10 09:57:36 | INFO     | text_processor:__init__:33 - 文本处理器初始化完成，chunk_size: 500, chunk_overlap: 50
+2026-06-10 09:57:36 | WARNING  | __main__:setup_environment:16 - .env文件不存在，请根据.env.example创建
+2026-06-10 09:57:36 | INFO     | __main__:<module>:42 - === RAG Web服务启动 === http://localhost:8000
+2026-06-10 09:58:37 | WARNING  | main:setup_environment:16 - .env文件不存在，请根据.env.example创建
+2026-06-10 09:58:37 | INFO     | rag_engine:__init__:60 - 成功初始化本地LLM
+2026-06-10 09:58:37 | INFO     | rag_engine:__init__:81 - RAG引擎初始化完成
+2026-06-10 09:58:37 | INFO     | agent_flow:__init__:31 - LangSmith未启用，跳过初始化
+2026-06-10 09:58:37 | INFO     | agent_flow:_build_graph:58 - LangGraph执行流程构建完成
+2026-06-10 09:58:37 | INFO     | agent_flow:__init__:46 - RAG Agent初始化完成
+2026-06-10 09:58:37 | INFO     | app:get_agent:26 - RAG agent initialized
+2026-06-10 10:01:55 | INFO     | document_processor:__init__:13 - 文档处理器初始化完成
+2026-06-10 10:02:07 | INFO     | text_processor:__init__:33 - 文本处理器初始化完成，chunk_size: 500, chunk_overlap: 50
+2026-06-10 10:02:07 | WARNING  | __main__:setup_environment:16 - .env文件不存在，请根据.env.example创建
+2026-06-10 10:02:07 | INFO     | __main__:<module>:42 - === RAG Web服务启动 === http://localhost:8000
+2026-06-10 10:03:31 | INFO     | document_processor:__init__:13 - 文档处理器初始化完成
+2026-06-10 10:03:43 | INFO     | text_processor:__init__:33 - 文本处理器初始化完成，chunk_size: 500, chunk_overlap: 50
+2026-06-10 10:03:43 | WARNING  | __main__:setup_environment:16 - .env文件不存在，请根据.env.example创建
+2026-06-10 10:03:43 | INFO     | __main__:<module>:42 - === RAG Web服务启动 === http://localhost:8000
+2026-06-10 10:04:32 | WARNING  | main:setup_environment:16 - .env文件不存在，请根据.env.example创建
+2026-06-10 10:04:33 | INFO     | rag_engine:__init__:60 - 成功初始化本地LLM
+2026-06-10 10:04:33 | INFO     | rag_engine:__init__:81 - RAG引擎初始化完成
+2026-06-10 10:04:33 | INFO     | agent_flow:__init__:31 - LangSmith未启用，跳过初始化
+2026-06-10 10:04:33 | INFO     | agent_flow:_build_graph:58 - LangGraph执行流程构建完成
+2026-06-10 10:04:33 | INFO     | agent_flow:__init__:46 - RAG Agent初始化完成
+2026-06-10 10:04:33 | INFO     | document_processor:process_file:22 - 开始处理文件: pdf_test_sample.pdf, 类型: .pdf
+2026-06-10 10:04:33 | INFO     | document_processor:process_file:34 - 文件处理完成: pdf_test_sample.pdf, 内容长度: 23576
+2026-06-10 10:04:33 | INFO     | text_processor:split_text:36 - 开始分割文本，原文本长度: 23576
+2026-06-10 10:04:33 | INFO     | text_processor:split_text:55 - 文本分割完成，生成 53 个段落
+2026-06-10 10:04:33 | INFO     | text_processor:create_vector_store:59 - 开始创建向量数据库，段落数量: 53
+2026-06-10 10:04:35 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:04:35 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:04:36 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:04:36 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:04:37 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:04:37 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:04:37 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:04:38 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:04:38 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:04:39 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:04:39 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:04:40 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:04:40 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:04:41 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:04:41 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:04:42 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:04:42 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:04:43 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:04:43 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:04:44 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:04:44 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:04:45 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:04:45 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:04:46 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:04:46 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:04:46 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:04:47 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:04:47 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:04:47 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:04:48 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:04:48 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:04:49 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:04:49 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:04:49 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:04:50 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:04:50 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:04:51 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:04:51 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:04:52 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:04:52 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:04:52 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:04:53 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:04:53 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:04:54 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:04:54 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:04:55 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:04:55 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:04:55 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:04:56 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:04:56 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:04:57 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:04:57 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:04:58 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:04:58 | INFO     | faiss.loader:<module>:132 - Loading faiss with AVX2 support.
+2026-06-10 10:04:58 | INFO     | faiss.loader:<module>:137 - Could not load library with AVX2 support due to:
+ModuleNotFoundError("No module named 'faiss.swigfaiss_avx2'")
+2026-06-10 10:04:58 | INFO     | faiss.loader:<module>:156 - Loading faiss.
+2026-06-10 10:04:58 | INFO     | faiss.loader:<module>:158 - Successfully loaded faiss.
+2026-06-10 10:04:58 | INFO     | text_processor:create_vector_store:70 - 向量数据库创建成功
+2026-06-10 10:04:58 | INFO     | app:get_agent:43 - 启动补充入库: pdf_test_sample.pdf
+2026-06-10 10:04:58 | INFO     | text_processor:save_vector_store:98 - 保存向量数据库到: vector_db
+2026-06-10 10:04:58 | INFO     | app:get_agent:48 - RAG agent initialized
+2026-06-10 10:04:58 | INFO     | document_processor:process_file:22 - 开始处理文件: pdf_test_sample.pdf, 类型: .pdf
+2026-06-10 10:04:58 | INFO     | document_processor:process_file:34 - 文件处理完成: pdf_test_sample.pdf, 内容长度: 23576
+2026-06-10 10:04:58 | INFO     | text_processor:split_text:36 - 开始分割文本，原文本长度: 23576
+2026-06-10 10:04:58 | INFO     | text_processor:split_text:55 - 文本分割完成，生成 53 个段落
+2026-06-10 10:04:59 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:04:59 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:05:00 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:05:00 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:05:00 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:05:01 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:05:01 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:05:02 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:05:02 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:05:02 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:05:03 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:05:03 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:05:04 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:05:04 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:05:05 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:05:05 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:05:06 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:05:06 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:05:06 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:05:07 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:05:07 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:05:08 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:05:08 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:05:09 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:05:09 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:05:09 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:05:10 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:05:10 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:05:11 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:05:11 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:05:12 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:05:12 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:05:12 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:05:13 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:05:13 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:05:14 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:05:14 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:05:14 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:05:15 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:05:15 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:05:16 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:05:16 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:05:17 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:05:17 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:05:17 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:05:18 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:05:18 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:05:19 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:05:19 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:05:20 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:05:20 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:05:20 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:05:21 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:05:21 | INFO     | text_processor:save_vector_store:98 - 保存向量数据库到: vector_db
+2026-06-10 10:05:21 | INFO     | app:upload:98 - 向量库已保存到 vector_db
+2026-06-10 10:05:46 | INFO     | agent_flow:run:138 - Agent开始处理查询: 你好 你是什么模型...
+2026-06-10 10:05:46 | INFO     | agent_flow:_retrieve_documents:63 - [节点: retrieve] 开始检索文档，查询: 你好 你是什么模型...
+2026-06-10 10:05:46 | INFO     | text_processor:search_similar:79 - 开始向量搜索，查询: 你好 你是什么模型..., k=5
+2026-06-10 10:05:46 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:05:46 | INFO     | text_processor:search_similar:92 - 向量搜索完成，找到 5 个相似结果
+2026-06-10 10:05:46 | INFO     | agent_flow:_generate_answer:80 - [节点: generate] 开始生成回答
+2026-06-10 10:05:46 | INFO     | rag_engine:generate_answer:108 - 开始生成回答，查询: 你好 你是什么模型..., 上下文长度: 2022
+2026-06-10 10:05:50 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:9090/v1/messages "HTTP/1.1 200 OK"
+2026-06-10 10:05:50 | INFO     | agent_flow:_log_result:103 - [节点: log_result] 完成处理，响应时间: 4.41秒
+2026-06-10 10:05:50 | INFO     | agent_flow:run:151 - Agent处理完成
+2026-06-10 10:06:10 | INFO     | agent_flow:run:138 - Agent开始处理查询: 什么体重才算是肥胖？...
+2026-06-10 10:06:10 | INFO     | agent_flow:_retrieve_documents:63 - [节点: retrieve] 开始检索文档，查询: 什么体重才算是肥胖？...
+2026-06-10 10:06:10 | INFO     | text_processor:search_similar:79 - 开始向量搜索，查询: 什么体重才算是肥胖？..., k=5
+2026-06-10 10:06:12 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:06:12 | INFO     | text_processor:search_similar:92 - 向量搜索完成，找到 5 个相似结果
+2026-06-10 10:06:12 | INFO     | agent_flow:_generate_answer:80 - [节点: generate] 开始生成回答
+2026-06-10 10:06:12 | INFO     | rag_engine:generate_answer:108 - 开始生成回答，查询: 什么体重才算是肥胖？..., 上下文长度: 2022
+2026-06-10 10:06:21 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:9090/v1/messages "HTTP/1.1 200 OK"
+2026-06-10 10:06:21 | INFO     | agent_flow:_log_result:103 - [节点: log_result] 完成处理，响应时间: 11.22秒
+2026-06-10 10:06:21 | INFO     | agent_flow:run:151 - Agent处理完成
+2026-06-10 10:09:19 | INFO     | document_processor:__init__:13 - 文档处理器初始化完成
+2026-06-10 10:09:30 | INFO     | text_processor:__init__:33 - 文本处理器初始化完成，chunk_size: 500, chunk_overlap: 50
+2026-06-10 10:09:30 | WARNING  | __main__:setup_environment:16 - .env文件不存在，请根据.env.example创建
+2026-06-10 10:09:30 | INFO     | __main__:<module>:42 - === RAG Web服务启动 === http://localhost:8000
+2026-06-10 10:09:31 | WARNING  | main:setup_environment:16 - .env文件不存在，请根据.env.example创建
+2026-06-10 10:09:32 | INFO     | rag_engine:__init__:60 - 成功初始化本地LLM
+2026-06-10 10:09:32 | INFO     | rag_engine:__init__:81 - RAG引擎初始化完成
+2026-06-10 10:09:32 | INFO     | agent_flow:__init__:31 - LangSmith未启用，跳过初始化
+2026-06-10 10:09:32 | INFO     | agent_flow:_build_graph:58 - LangGraph执行流程构建完成
+2026-06-10 10:09:32 | INFO     | agent_flow:__init__:46 - RAG Agent初始化完成
+2026-06-10 10:09:32 | INFO     | text_processor:load_vector_store:102 - 从 vector_db 加载向量数据库
+2026-06-10 10:09:32 | INFO     | faiss.loader:<module>:132 - Loading faiss with AVX2 support.
+2026-06-10 10:09:32 | INFO     | faiss.loader:<module>:137 - Could not load library with AVX2 support due to:
+ModuleNotFoundError("No module named 'faiss.swigfaiss_avx2'")
+2026-06-10 10:09:32 | INFO     | faiss.loader:<module>:156 - Loading faiss.
+2026-06-10 10:09:32 | INFO     | faiss.loader:<module>:158 - Successfully loaded faiss.
+2026-06-10 10:09:32 | INFO     | text_processor:load_vector_store:108 - 向量数据库加载成功
+2026-06-10 10:09:32 | INFO     | app:get_agent:31 - 向量库已从磁盘加载
+2026-06-10 10:09:32 | INFO     | app:get_agent:36 - 对话历史已加载
+2026-06-10 10:09:32 | INFO     | app:get_agent:48 - RAG agent initialized
+2026-06-10 10:10:03 | INFO     | agent_flow:run:138 - Agent开始处理查询: 如果我想要减肥需要怎么做？...
+2026-06-10 10:10:03 | INFO     | agent_flow:_retrieve_documents:63 - [节点: retrieve] 开始检索文档，查询: 如果我想要减肥需要怎么做？...
+2026-06-10 10:10:03 | INFO     | text_processor:search_similar:79 - 开始向量搜索，查询: 如果我想要减肥需要怎么做？..., k=5
+2026-06-10 10:10:05 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:10:05 | INFO     | text_processor:search_similar:92 - 向量搜索完成，找到 5 个相似结果
+2026-06-10 10:10:05 | INFO     | agent_flow:_generate_answer:80 - [节点: generate] 开始生成回答
+2026-06-10 10:10:05 | INFO     | rag_engine:generate_answer:108 - 开始生成回答，查询: 如果我想要减肥需要怎么做？..., 上下文长度: 2022
+2026-06-10 10:10:18 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:9090/v1/messages "HTTP/1.1 200 OK"
+2026-06-10 10:10:18 | INFO     | agent_flow:_log_result:103 - [节点: log_result] 完成处理，响应时间: 15.32秒
+2026-06-10 10:10:18 | INFO     | agent_flow:run:151 - Agent处理完成
+2026-06-10 10:14:35 | INFO     | document_processor:__init__:13 - 文档处理器初始化完成
+2026-06-10 10:14:46 | INFO     | text_processor:__init__:33 - 文本处理器初始化完成，chunk_size: 500, chunk_overlap: 50
+2026-06-10 10:14:46 | WARNING  | __main__:setup_environment:16 - .env文件不存在，请根据.env.example创建
+2026-06-10 10:14:46 | INFO     | __main__:<module>:42 - === RAG Web服务启动 === http://localhost:8000
+2026-06-10 10:17:51 | WARNING  | main:setup_environment:16 - .env文件不存在，请根据.env.example创建
+2026-06-10 10:17:52 | INFO     | rag_engine:__init__:60 - 成功初始化本地LLM
+2026-06-10 10:17:52 | INFO     | rag_engine:__init__:81 - RAG引擎初始化完成
+2026-06-10 10:17:52 | INFO     | agent_flow:__init__:31 - LangSmith未启用，跳过初始化
+2026-06-10 10:17:52 | INFO     | agent_flow:_build_graph:58 - LangGraph执行流程构建完成
+2026-06-10 10:17:52 | INFO     | agent_flow:__init__:46 - RAG Agent初始化完成
+2026-06-10 10:17:52 | INFO     | text_processor:load_vector_store:102 - 从 vector_db 加载向量数据库
+2026-06-10 10:17:52 | INFO     | faiss.loader:<module>:132 - Loading faiss with AVX2 support.
+2026-06-10 10:17:52 | INFO     | faiss.loader:<module>:137 - Could not load library with AVX2 support due to:
+ModuleNotFoundError("No module named 'faiss.swigfaiss_avx2'")
+2026-06-10 10:17:52 | INFO     | faiss.loader:<module>:156 - Loading faiss.
+2026-06-10 10:17:52 | INFO     | faiss.loader:<module>:158 - Successfully loaded faiss.
+2026-06-10 10:17:52 | INFO     | text_processor:load_vector_store:108 - 向量数据库加载成功
+2026-06-10 10:17:52 | INFO     | app:get_agent:32 - 向量库已从磁盘加载
+2026-06-10 10:17:52 | INFO     | app:get_agent:43 - RAG agent initialized
+2026-06-10 10:17:52 | INFO     | agent_flow:run:138 - Agent开始处理查询: 怎么减肥...
+2026-06-10 10:17:52 | INFO     | agent_flow:_retrieve_documents:63 - [节点: retrieve] 开始检索文档，查询: 怎么减肥...
+2026-06-10 10:17:52 | INFO     | text_processor:search_similar:79 - 开始向量搜索，查询: 怎么减肥..., k=5
+2026-06-10 10:17:55 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 10:17:55 | INFO     | text_processor:search_similar:92 - 向量搜索完成，找到 5 个相似结果
+2026-06-10 10:17:55 | INFO     | agent_flow:_generate_answer:80 - [节点: generate] 开始生成回答
+2026-06-10 10:17:55 | INFO     | rag_engine:generate_answer:108 - 开始生成回答，查询: 怎么减肥..., 上下文长度: 2065
+2026-06-10 10:18:12 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:9090/v1/messages "HTTP/1.1 200 OK"
+2026-06-10 10:18:12 | INFO     | agent_flow:_log_result:103 - [节点: log_result] 完成处理，响应时间: 20.69秒
+2026-06-10 10:18:12 | INFO     | agent_flow:run:151 - Agent处理完成
+2026-06-10 11:10:20 | INFO     | agent_flow:run:138 - Agent开始处理查询: 怎么锻炼才能缴费...
+2026-06-10 11:10:20 | INFO     | agent_flow:_retrieve_documents:63 - [节点: retrieve] 开始检索文档，查询: 怎么锻炼才能缴费...
+2026-06-10 11:10:20 | INFO     | text_processor:search_similar:79 - 开始向量搜索，查询: 怎么锻炼才能缴费..., k=5
+2026-06-10 11:10:22 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 11:10:22 | INFO     | text_processor:search_similar:92 - 向量搜索完成，找到 5 个相似结果
+2026-06-10 11:10:22 | INFO     | agent_flow:_generate_answer:80 - [节点: generate] 开始生成回答
+2026-06-10 11:10:22 | INFO     | rag_engine:generate_answer:108 - 开始生成回答，查询: 怎么锻炼才能缴费..., 上下文长度: 2022
+2026-06-10 11:10:31 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:9090/v1/messages "HTTP/1.1 200 OK"
+2026-06-10 11:10:31 | INFO     | agent_flow:_log_result:103 - [节点: log_result] 完成处理，响应时间: 10.41秒
+2026-06-10 11:10:31 | INFO     | agent_flow:run:151 - Agent处理完成
+2026-06-10 11:11:11 | INFO     | agent_flow:run:138 - Agent开始处理查询: 怎么锻炼才能减肥...
+2026-06-10 11:11:11 | INFO     | agent_flow:_retrieve_documents:63 - [节点: retrieve] 开始检索文档，查询: 怎么锻炼才能减肥...
+2026-06-10 11:11:11 | INFO     | text_processor:search_similar:79 - 开始向量搜索，查询: 怎么锻炼才能减肥..., k=5
+2026-06-10 11:11:11 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 11:11:11 | INFO     | text_processor:search_similar:92 - 向量搜索完成，找到 5 个相似结果
+2026-06-10 11:11:11 | INFO     | agent_flow:_generate_answer:80 - [节点: generate] 开始生成回答
+2026-06-10 11:11:11 | INFO     | rag_engine:generate_answer:108 - 开始生成回答，查询: 怎么锻炼才能减肥..., 上下文长度: 2022
+2026-06-10 11:11:20 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:9090/v1/messages "HTTP/1.1 200 OK"
+2026-06-10 11:11:20 | INFO     | agent_flow:_log_result:103 - [节点: log_result] 完成处理，响应时间: 9.56秒
+2026-06-10 11:11:20 | INFO     | agent_flow:run:151 - Agent处理完成
+2026-06-10 11:18:11 | INFO     | document_processor:__init__:13 - 文档处理器初始化完成
+2026-06-10 11:18:23 | INFO     | text_processor:__init__:33 - 文本处理器初始化完成，chunk_size: 500, chunk_overlap: 50
+2026-06-10 11:18:24 | WARNING  | __main__:setup_environment:16 - .env文件不存在，请根据.env.example创建
+2026-06-10 11:18:24 | INFO     | __main__:<module>:42 - === RAG Web服务启动 === http://localhost:8000
+2026-06-10 11:18:42 | WARNING  | main:setup_environment:16 - .env文件不存在，请根据.env.example创建
+2026-06-10 11:18:43 | INFO     | rag_engine:__init__:60 - 成功初始化本地LLM
+2026-06-10 11:18:43 | INFO     | rag_engine:__init__:81 - RAG引擎初始化完成
+2026-06-10 11:18:43 | INFO     | agent_flow:__init__:31 - LangSmith未启用，跳过初始化
+2026-06-10 11:18:43 | INFO     | agent_flow:_build_graph:58 - LangGraph执行流程构建完成
+2026-06-10 11:18:43 | INFO     | agent_flow:__init__:46 - RAG Agent初始化完成
+2026-06-10 11:18:43 | INFO     | text_processor:load_vector_store:102 - 从 vector_db 加载向量数据库
+2026-06-10 11:18:43 | INFO     | faiss.loader:<module>:132 - Loading faiss with AVX2 support.
+2026-06-10 11:18:43 | INFO     | faiss.loader:<module>:137 - Could not load library with AVX2 support due to:
+ModuleNotFoundError("No module named 'faiss.swigfaiss_avx2'")
+2026-06-10 11:18:43 | INFO     | faiss.loader:<module>:156 - Loading faiss.
+2026-06-10 11:18:43 | INFO     | faiss.loader:<module>:158 - Successfully loaded faiss.
+2026-06-10 11:18:43 | INFO     | text_processor:load_vector_store:108 - 向量数据库加载成功
+2026-06-10 11:18:43 | INFO     | app:get_agent:34 - 向量库已从磁盘加载
+2026-06-10 11:18:43 | INFO     | app:get_agent:45 - RAG agent initialized
+2026-06-10 11:18:43 | INFO     | agent_flow:run:138 - Agent开始处理查询: 怎么做手术减肥...
+2026-06-10 11:18:43 | INFO     | agent_flow:_retrieve_documents:63 - [节点: retrieve] 开始检索文档，查询: 怎么做手术减肥...
+2026-06-10 11:18:43 | INFO     | text_processor:search_similar:79 - 开始向量搜索，查询: 怎么做手术减肥..., k=5
+2026-06-10 11:18:47 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:11434/api/embeddings "HTTP/1.1 200 OK"
+2026-06-10 11:18:47 | INFO     | text_processor:search_similar:92 - 向量搜索完成，找到 5 个相似结果
+2026-06-10 11:18:47 | INFO     | agent_flow:_generate_answer:80 - [节点: generate] 开始生成回答
+2026-06-10 11:18:47 | INFO     | rag_engine:generate_answer:108 - 开始生成回答，查询: 怎么做手术减肥..., 上下文长度: 2065
+2026-06-10 11:18:56 | INFO     | httpx._client:_send_single_request:1025 - HTTP Request: POST http://localhost:9090/v1/messages "HTTP/1.1 200 OK"
+2026-06-10 11:18:56 | INFO     | agent_flow:_log_result:103 - [节点: log_result] 完成处理，响应时间: 13.39秒
+2026-06-10 11:18:56 | INFO     | agent_flow:run:151 - Agent处理完成
